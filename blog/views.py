@@ -161,3 +161,6 @@ def like_post(request, pk):
         if next_url == 'detail':
             return redirect('blog:post_detail', pk=post.pk)
         return redirect('blog:post_list')
+
+def about_us(request):
+    return render(request, 'blog/about_us.html')

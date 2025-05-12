@@ -1,36 +1,197 @@
 {% load static %}
-<footer class="footer mt-auto py-4 bg-dark text-white">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-4 mb-3 mb-md-0">
-                <h5>TechBlog</h5>
-                <p class="text-muted">Share your knowledge and ideas with the world.</p>
-            </div>
-            <div class="col-md-4 mb-3 mb-md-0">
-                <h5>Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="{% url 'blog:post_list' %}" class="text-muted">Home</a></li>
-                    {% if user.is_authenticated %}
-                    <li><a href="{% url 'blog:post_create' %}" class="text-muted">Create Post</a></li>
-                    {% else %}
-                    <li><a href="#" class="text-muted">Login</a></li>
-                    <li><a href="#" class="text-muted">Register</a></li>
-                    {% endif %}
-                </ul>
-            </div>
-            <div class="col-md-4">
-                <h5>Connect</h5>
-                <div class="social-icons">
-                    <a href="#" class="text-muted mr-3"><i class="fab fa-twitter fa-lg"></i></a>
-                    <a href="#" class="text-muted mr-3"><i class="fab fa-facebook fa-lg"></i></a>
-                    <a href="#" class="text-muted mr-3"><i class="fab fa-instagram fa-lg"></i></a>
-                    <a href="#" class="text-muted"><i class="fab fa-github fa-lg"></i></a>
+<footer class="footer mt-auto py-5"
+    style="background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%); position: relative; overflow: hidden;">
+    <!-- Decorative Elements -->
+    <div class="position-absolute"
+        style="top: -50px; left: -50px; width: 150px; height: 150px; border-radius: 50%; background: rgba(80, 200, 198, 0.1);">
+    </div>
+    <div class="position-absolute"
+        style="bottom: -30px; right: -30px; width: 100px; height: 100px; border-radius: 50%; background: rgba(52, 152, 219, 0.1);">
+    </div>
+
+    <!-- Wave Separator -->
+    <div class="position-absolute w-100" style="top: 0; left: 0;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 100" preserveAspectRatio="none"
+            style="width: 100%; height: 30px;">
+            <path fill="#f8f9fa" fill-opacity="1"
+                d="M0,32L48,37.3C96,43,192,53,288,58.7C384,64,480,64,576,58.7C672,53,768,43,864,42.7C960,43,1056,53,1152,53.3C1248,53,1344,43,1392,37.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+            </path>
+        </svg>
+    </div>
+
+    <div class="container position-relative">
+        <div class="row mb-5">
+            <!-- Brand Section -->
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <div class="d-flex align-items-center mb-3">
+                    <i class="fas fa-pencil-alt text-primary me-2"
+                        style="font-size: 28px; color: #50C8C6 !important;"></i>
+                    <h4 class="m-0 text-white" style="font-weight: 700; letter-spacing: 1px;">TechBlog</h4>
+                </div>
+                <p class="text-light opacity-75" style="line-height: 1.8;">Share your knowledge and ideas with the
+                    world. Join our community of tech enthusiasts, developers, and creative thinkers.</p>
+                <div class="newsletter mt-4">
+                    <h6 class="text-white mb-3">Stay Updated</h6>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Your email"
+                            style="border-radius: 20px 0 0 20px;">
+                        <button class="btn btn-primary" type="button"
+                            style="border-radius: 0 20px 20px 0; background-color: #50C8C6; border-color: #50C8C6;">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <!-- Quick Links Section -->
+            <div class="col-lg-4 col-md-6 mb-4 mb-md-0">
+                <h5 class="text-white mb-4" style="font-weight: 600; position: relative;">
+                    Quick Links
+                    <span
+                        style="display: block; width: 50px; height: 3px; background-color: #50C8C6; margin-top: 10px;"></span>
+                </h5>
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="list-unstyled footer-links">
+                            <li class="mb-3"><a href="{% url 'blog:post_list' %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Home</a></li>
+                            <li class="mb-3"><a href="{% url 'blog:post_list' %}?q=tech"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Tech Posts</a></li>
+                            <li class="mb-3"><a href="{% url 'blog:about_us' %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>About Us</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="list-unstyled footer-links">
+                            {% if user.is_authenticated %}
+                            <li class="mb-3"><a href="{% url 'blog:post_create' %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Create Post</a></li>
+                            <li class="mb-3"><a href="{% url 'blog:author_posts' user.username %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>My Posts</a></li>
+                            <li class="mb-3"><a href="{% url 'logout' %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Logout</a></li>
+                            {% else %}
+                            <li class="mb-3"><a href="{% url 'login' %}"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Login</a></li>
+                            <li class="mb-3"><a href="#"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>Register</a></li>
+                            <li class="mb-3"><a href="#"
+                                    class="text-light opacity-75 text-decoration-none hover-link"><i
+                                        class="fas fa-angle-right me-2 text-primary"
+                                        style="color: #50C8C6 !important;"></i>FAQ</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Connect Section -->
+            <div class="col-lg-4 col-md-6">
+                <h5 class="text-white mb-4" style="font-weight: 600; position: relative;">
+                    Connect With Us
+                    <span
+                        style="display: block; width: 50px; height: 3px; background-color: #50C8C6; margin-top: 10px;"></span>
+                </h5>
+                <div class="d-flex mb-4">
+                    <a href="#" class="social-btn me-2"
+                        style="background-color: #1da1f2; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s;">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-btn me-2"
+                        style="background-color: #4267B2; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s;">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-btn me-2"
+                        style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s;">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-btn me-2"
+                        style="background-color: #333; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s;">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-btn"
+                        style="background-color: #0077b5; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; transition: all 0.3s;">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+
+                <h6 class="text-white mb-3">Contact Us</h6>
+                <ul class="list-unstyled contact-info">
+                    <li class="d-flex mb-3">
+                        <i class="fas fa-map-marker-alt me-3 mt-1" style="color: #50C8C6;"></i>
+                        <span class="text-light opacity-75">123 Tech Street, Cairo, Egypt</span>
+                    </li>
+                    <li class="d-flex mb-3">
+                        <i class="fas fa-envelope me-3 mt-1" style="color: #50C8C6;"></i>
+                        <span class="text-light opacity-75">contact@techblog.com</span>
+                    </li>
+                    <li class="d-flex">
+                        <i class="fas fa-phone me-3 mt-1" style="color: #50C8C6;"></i>
+                        <span class="text-light opacity-75">+20 123 456 7890</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <hr class="bg-secondary mt-4">
-        <div class="text-center">
-            <p class="mb-0 text-muted">TechBlog &copy; {% now "Y" %} | All rights reserved</p>
+
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 30px 0;">
+
+        <!-- Bottom Section -->
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="text-light opacity-75 mb-0">© {% now "Y" %} TechBlog. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a href="#"
+                            class="text-light opacity-75 text-decoration-none hover-link">Privacy Policy</a></li>
+                    <li class="list-inline-item ms-3"><a href="#"
+                            class="text-light opacity-75 text-decoration-none hover-link">Terms of Service</a></li>
+                    <li class="list-inline-item ms-3"><a href="#"
+                            class="text-light opacity-75 text-decoration-none hover-link">Cookie Policy</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </footer>
+
+<style>
+    .hover-link {
+        transition: all 0.3s ease;
+    }
+
+    .hover-link:hover {
+        color: #50C8C6 !important;
+        text-decoration: none;
+        opacity: 1 !important;
+        transform: translateX(5px);
+    }
+
+    .social-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .footer-links li {
+        transition: all 0.3s ease;
+    }
+
+    .footer-links li:hover {
+        transform: translateX(5px);
+    }
+</style>

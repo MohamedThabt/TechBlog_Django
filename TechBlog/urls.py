@@ -25,8 +25,8 @@ urlpatterns = [
     path('', blog_views.post_list, name='home'),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
-    path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),  # Add login URL
-    path('logout/', auth_views.LogoutView.as_view(template_name='blog/logout.html'), name='logout'),  # Add logout URL
+    path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name='blog/logout.html'), name='logout'),
 ]
 
 # Add media URL patterns

@@ -1,0 +1,317 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="about-us-page">
+    <div class="container mt-5 pt-4 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-xl border-0 rounded-lg overflow-hidden">
+                    <div class="card-header about-header text-white text-center py-5">
+                        <h1 class="display-4 fw-bold mb-0">About TechBlog</h1>
+                        <p class="lead mt-2">Connecting Minds, Sharing Knowledge</p>
+                    </div>
+                    <div class="card-body p-lg-5 p-4">
+                        <!-- Our Mission Section -->
+                        <section class="our-mission mb-5 py-4">
+                            <div class="row align-items-center">
+                                <div class="col-md-4 text-center mb-4 mb-md-0">
+                                    <img src="{% static 'img/Online page-rafiki.png' %}" alt="TechBlog Mission"
+                                        class="img-fluid rounded-circle mission-image shadow">
+                                </div>
+                                <div class="col-md-8">
+                                    <h2 class="section-title mb-3">Our Mission</h2>
+                                    <p class="text-secondary mission-text">
+                                        At TechBlog, our mission is to create a vibrant and inclusive platform where
+                                        technology
+                                        enthusiasts, developers, and innovators can share their knowledge, insights, and
+                                        passion
+                                        with a global audience. We believe in the power of collaborative learning and
+                                        aim to
+                                        foster a community that inspires creativity and drives technological
+                                        advancement.
+                                    </p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr class="my-5 custom-hr">
+
+                        <!-- What We Offer Section -->
+                        <section class="what-we-offer text-center mb-5 py-4">
+                            <h2 class="section-title mb-5">What We Offer</h2>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <div class="offer-card card h-100 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="offer-icon-container mb-3">
+                                                <i class="fas fa-feather-alt fa-3x offer-icon"></i>
+                                            </div>
+                                            <h4 class="offer-title mb-2">Insightful Articles</h4>
+                                            <p class="text-secondary small">Explore a wide range of articles covering
+                                                the latest trends,
+                                                tutorials, and discussions in the tech world.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="offer-card card h-100 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="offer-icon-container mb-3">
+                                                <i class="fas fa-users fa-3x offer-icon"></i>
+                                            </div>
+                                            <h4 class="offer-title mb-2">Community Driven</h4>
+                                            <p class="text-secondary small">Join a growing community of authors and
+                                                readers, engage in
+                                                discussions, and share your expertise.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="offer-card card h-100 shadow-sm">
+                                        <div class="card-body">
+                                            <div class="offer-icon-container mb-3">
+                                                <i class="fas fa-lightbulb fa-3x offer-icon"></i>
+                                            </div>
+                                            <h4 class="offer-title mb-2">Share Your Voice</h4>
+                                            <p class="text-secondary small">Become an author and contribute your unique
+                                                perspective to our
+                                                ever-expanding library of tech content.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <hr class="my-5 custom-hr">
+
+                        <!-- Join Our Journey Section -->
+                        <section class="join-our-journey text-center py-5 bg-light-teal rounded-lg">
+                            <h2 class="section-title mb-4">Join Our Journey</h2>
+                            <p class="text-secondary mb-4 journey-text mx-auto" style="max-width: 600px;">
+                                Whether you're here to learn, share, or connect, TechBlog is your go-to destination for
+                                all
+                                things tech. We're excited to have you as part of our community!
+                            </p>
+                            <div class="mt-4">
+                                <a href="{% url 'blog:post_list' %}"
+                                    class="btn btn-primary btn-lg custom-btn me-2 mb-2 mb-md-0">
+                                    <i class="fas fa-newspaper me-2"></i> Explore Posts
+                                </a>
+                                {% if not user.is_authenticated %}
+                                <a href="{% url 'login' %}"
+                                    class="btn btn-outline-secondary btn-lg custom-btn mb-2 mb-md-0">
+                                    <i class="fas fa-user-plus me-2"></i> Become a Member
+                                </a>
+                                {% else %}
+                                <a href="{% url 'blog:post_create' %}"
+                                    class="btn btn-outline-secondary btn-lg custom-btn">
+                                    <i class="fas fa-edit me-2"></i> Create a Post
+                                </a>
+                                {% endif %}
+                            </div>
+                        </section>
+                    </div>
+                    <div class="card-footer text-center py-4 bg-light-gray">
+                        <p class="mb-2 text-secondary">
+                            Follow us on our social channels to stay updated!
+                        </p>
+                        <div class="social-icons mt-2">
+                            <a href="#" class="social-icon-link twitter me-3"><i class="fab fa-twitter"></i></a>
+                            <a href="#" class="social-icon-link facebook me-3"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="social-icon-link instagram me-3"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="social-icon-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .about-us-page {
+        background-color: #f8f9fa;
+        /* Light background for the whole page */
+    }
+
+    .about-header {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        /* Primary gradient */
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .mission-image {
+        max-width: 220px;
+        border: 7px solid #50C8C6;
+        /* Teal accent border */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .section-title {
+        color: #2c3e50;
+        /* Dark blue-gray for titles */
+        font-weight: 600;
+    }
+
+    .mission-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .custom-hr {
+        border-top: 1px solid #dee2e6;
+        /* Lighter hr */
+    }
+
+    .offer-card {
+        border: none;
+        /* Remove default card border */
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        background-color: #ffffff;
+        /* White background for offer cards */
+        border-radius: 0.75rem;
+        /* Softer corners */
+    }
+
+    .offer-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(44, 62, 80, 0.15) !important;
+    }
+
+    .offer-icon-container {
+        width: 70px;
+        height: 70px;
+        background-color: #e0f7fa;
+        /* Light teal background for icon */
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        transition: background-color 0.3s ease;
+    }
+
+    .offer-icon {
+        color: #50C8C6;
+        /* Teal icon color */
+        transition: color 0.3s ease;
+    }
+
+    .offer-card:hover .offer-icon-container {
+        background-color: #50C8C6;
+    }
+
+    .offer-card:hover .offer-icon {
+        color: #ffffff;
+    }
+
+    .offer-title {
+        color: #34495e;
+        /* Darker gray for offer titles */
+        font-weight: 500;
+    }
+
+    .bg-light-teal {
+        background-color: #e6fffa;
+        /* Very light teal for "Join Our Journey" */
+        padding: 2.5rem 1.5rem;
+    }
+
+    .journey-text {
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .custom-btn {
+        border-radius: 30px;
+        padding: 12px 30px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary.custom-btn {
+        background-color: #50C8C6;
+        border-color: #50C8C6;
+    }
+
+    .btn-primary.custom-btn:hover {
+        background-color: #40a09e;
+        border-color: #40a09e;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(80, 200, 198, 0.3);
+    }
+
+    .btn-outline-secondary.custom-btn {
+        color: #50C8C6;
+        border-color: #50C8C6;
+    }
+
+    .btn-outline-secondary.custom-btn:hover {
+        background-color: #50C8C6;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(80, 200, 198, 0.2);
+    }
+
+    .bg-light-gray {
+        background-color: #f8f9fa;
+        /* Standard light gray */
+    }
+
+    .social-icons .social-icon-link {
+        font-size: 1.6rem;
+        transition: color 0.3s ease, transform 0.3s ease;
+        display: inline-block;
+        /* Allows transform */
+    }
+
+    .social-icons .social-icon-link:hover {
+        transform: scale(1.2);
+    }
+
+    .social-icons .twitter {
+        color: #1da1f2;
+    }
+
+    .social-icons .facebook {
+        color: #4267B2;
+    }
+
+    .social-icons .instagram {
+        color: #e1306c;
+    }
+
+    /* Instagram's gradient is hard, using a solid pink */
+    .social-icons .linkedin {
+        color: #0077b5;
+    }
+
+    .social-icons .twitter:hover {
+        color: #0c85d0;
+    }
+
+    .social-icons .facebook:hover {
+        color: #365899;
+    }
+
+    .social-icons .instagram:hover {
+        color: #c13584;
+    }
+
+    .social-icons .linkedin:hover {
+        color: #005e93;
+    }
+
+    .shadow-xl {
+        /* Custom larger shadow */
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+    }
+
+    .rounded-lg {
+        /* Custom larger border-radius */
+        border-radius: .8rem !important;
+    }
+</style>
+{% endblock content %}

@@ -20,6 +20,9 @@
                         <i class="fas fa-plus-circle me-1"></i> New Post
                     </a>
                 </li> {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:about_us' %}">About Us</a>
+                </li>
             </ul>
 
             <form class="d-flex mx-auto" action="{% url 'blog:post_list' %}" method="get">
@@ -41,12 +44,26 @@
                     </span>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-sign-out-alt me-1"></i> Logout
-                    </a>
+                    {% if user.is_superuser %}
+                    <form action="{% url 'admin:logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link"
+                            style="display: inline; padding: 0; border: none; background: none;">
+                            <i class="fas fa-sign-out-alt me-1"></i> Logout (Admin)
+                        </button>
+                    </form>
+                    {% else %}
+                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="nav-link btn btn-link"
+                            style="display: inline; padding: 0; border: none; background: none;">
+                            <i class="fas fa-sign-out-alt me-1"></i> Logout
+                        </button>
+                    </form>
+                    {% endif %}
                 </li>
                 {% else %} <li class="nav-item d-flex">
-                    <a class="nav-link btn btn-outline-primary btn-sm login-btn me-2" href="#">
+                    <a class="nav-link btn btn-outline-primary btn-sm login-btn me-2" href="{% url 'login' %}">
                         <i class="fas fa-sign-in-alt me-1"></i> Login
                     </a>
                 </li>
