@@ -1,10 +1,9 @@
 {% load static %}
-<nav class="navbar navbar-expand-lg navbar-custom fixed-top">
-    <div class="container">
-        <a class="navbar-brand" href="{% url 'blog:post_list' %}">
-            <i class="fas fa-pencil-alt mr-2"></i>TechBlog
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    <div class="container"> <a class="navbar-brand" href="{% url 'blog:post_list' %}">
+            <i class="fas fa-pencil-alt me-2"></i>TechBlog
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -12,49 +11,50 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'blog:post_list' %}">
-                        <i class="fas fa-home mr-1"></i> Home
+                        <i class="fas fa-home me-1"></i> Home
                     </a>
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'blog:post_create' %}">
-                        <i class="fas fa-plus-circle mr-1"></i> New Post
+                        <i class="fas fa-plus-circle me-1"></i> New Post
                     </a>
-                </li>
-                {% endif %}
+                </li> {% endif %}
             </ul>
-            <ul class="navbar-nav ms-auto">
+
+            <form class="d-flex mx-auto" action="{% url 'blog:post_list' %}" method="get">
+                <div class="input-group">
+                    <input class="form-control" type="search" name="q" placeholder="Search posts..." aria-label="Search"
+                        value="{{ request.GET.q }}">
+                    <button class="btn btn-outline-primary" type="submit">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </form>
+
+            <ul class="navbar-nav ms-auto d-flex align-items-center">
                 {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user-circle mr-1"></i> {{ user.username }}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-user mr-2"></i> Profile
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-cog mr-2"></i> Settings
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-sign-out-alt mr-2"></i> Logout
-                        </a>
-                    </div>
-                </li>
-                {% else %}
                 <li class="nav-item">
-                    <a class="nav-link btn btn-outline-light btn-sm login-btn" href="#">
-                        <i class="fas fa-sign-in-alt mr-1"></i> Login
+                    <span class="navbar-text me-3">
+                        <i class="fas fa-user-circle me-1"></i>
+                        {{ user.username }}
+                    </span>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-sign-out-alt me-1"></i> Logout
+                    </a>
+                </li>
+                {% else %} <li class="nav-item d-flex">
+                    <a class="nav-link btn btn-outline-primary btn-sm login-btn me-2" href="#">
+                        <i class="fas fa-sign-in-alt me-1"></i> Login
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link btn btn-primary btn-sm register-btn" href="#">
-                        <i class="fas fa-user-plus mr-1"></i> Register
+                        <i class="fas fa-user-plus me-1"></i> Register
                     </a>
-                </li>
-                {% endif %}
+                </li>{% endif %}
             </ul>
         </div>
     </div>

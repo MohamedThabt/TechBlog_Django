@@ -1,11 +1,11 @@
-from django.shortcuts import render  # Added render back
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib import messages
 from django.views import View
-from .models import Post, Like, Comment  # Added Comment
-from .forms import PostForm, CommentForm  # Added CommentForm
+from django.db.models import Q  # Import Q
+from .models import Post, Like
+from .forms import PostForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 # Create your views here.
@@ -15,6 +15,16 @@ class PostListView(ListView):
     template_name = 'blog/post_list.html'  # <app>/<model>_<viewtype>.html
     context_object_name = 'posts'
     ordering = ['-created_at']
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get('q')
+        if query:
+            # Search in title and content
+            queryset = queryset.filter(
+                Q(title__icontains=query) | Q(content__icontains=query)
+            )
+        return queryset
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
