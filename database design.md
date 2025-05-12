@@ -1,5 +1,4 @@
 ```mermaid
-
 erDiagram
     USERS ||--o{ POSTS : creates
     USERS ||--o{ LIKES : gives
@@ -9,8 +8,7 @@ erDiagram
 
     USERS {
         int id PK
-        string first_name
-        string last_name
+        string username
         string email
         string password
     }
@@ -19,22 +17,23 @@ erDiagram
         int id PK
         string title
         text content
-        int user_id FK
+        string image "Nullable"
+        int author_id FK "References USERS.id"
         datetime created_at
         datetime updated_at
     }
 
     LIKES {
         int id PK
-        int post_id FK
-        int user_id FK
+        int post_id FK "References POSTS.id"
+        int user_id FK "References USERS.id"
         datetime created_at
     }
 
     COMMENTS {
         int id PK
-        int post_id FK
-        int user_id FK
+        int post_id FK "References POSTS.id"
+        int user_id FK "References USERS.id"
         text content
         datetime created_at
     }

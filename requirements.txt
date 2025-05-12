@@ -1,0 +1,21 @@
+# Django Project Requirements
+
+# Base Django functionality
+django==5.0.*  # Use the appropriate version you're working with
+
+# Image handling
+pillow==10.1.*  # For ImageField support
+
+# For deployment (optional)
+gunicorn==21.2.*  # WSGI HTTP Server
+whitenoise==6.6.*  # Simplified static file serving
+
+# Database (if using something other than SQLite)
+# psycopg2-binary==2.9.*  # For PostgreSQL
+
+# Environment variables management (optional)
+# python-dotenv==1.0.*
+
+# Additional packages based on your project needs
+# django-crispy-forms==2.1.*  # For better form rendering
+# django-allauth==0.60.*  # For enhanced authentication

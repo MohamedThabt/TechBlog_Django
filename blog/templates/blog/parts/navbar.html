@@ -16,6 +16,11 @@
                 </li>
                 {% if user.is_authenticated %}
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'blog:dashboard' %}">
+                        <i class="fas fa-tachometer-alt me-1"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'blog:post_create' %}">
                         <i class="fas fa-plus-circle me-1"></i> New Post
                     </a>
@@ -37,38 +42,36 @@
 
             <ul class="navbar-nav ms-auto d-flex align-items-center">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <span class="navbar-text me-3">
-                        <i class="fas fa-user-circle me-1"></i>
-                        {{ user.username }}
-                    </span>
+                <li class="nav-item dropdown"></li>
+                        <i class="fas fa-user-circle me-2 text-primary"></i>
+                        <span>  {{ user.username }} </span>
                 </li>
                 <li class="nav-item">
                     {% if user.is_superuser %}
                     <form action="{% url 'admin:logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link btn btn-link"
-                            style="display: inline; padding: 0; border: none; background: none;">
+                        <button type="submit" class="nav-link btn btn-link text-danger"
+                            style="display: inline; padding: 0.5rem; border: none; background: none;">
                             <i class="fas fa-sign-out-alt me-1"></i> Logout (Admin)
                         </button>
                     </form>
                     {% else %}
-                    <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                    <form action="{% url 'blog:logout' %}" method="post" style="display: inline;">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link btn btn-link"
-                            style="display: inline; padding: 0; border: none; background: none;">
+  </ul>                      <button type="submit" class="nav-link btn btn-link"
+                            style="display: inline; padding: 0.5rem; border: none; background: none;">
                             <i class="fas fa-sign-out-alt me-1"></i> Logout
                         </button>
                     </form>
                     {% endif %}
                 </li>
                 {% else %} <li class="nav-item d-flex">
-                    <a class="nav-link btn btn-outline-primary btn-sm login-btn me-2" href="{% url 'login' %}">
+                    <a class="nav-link btn btn-outline-primary btn-sm login-btn me-2" href="{% url 'blog:login' %}">
                         <i class="fas fa-sign-in-alt me-1"></i> Login
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary btn-sm register-btn" href="#">
+                    <a class="nav-link btn btn-primary btn-sm register-btn" href="{% url 'blog:register' %}">
                         <i class="fas fa-user-plus me-1"></i> Register
                     </a>
                 </li>{% endif %}

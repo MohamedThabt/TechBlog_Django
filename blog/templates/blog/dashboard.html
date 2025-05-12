@@ -1,0 +1,158 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}Dashboard - TechBlog{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="display-5">{{ user.username }}'s Dashboard</h2>
+                <p class="text-muted">Welcome back! Here's an overview of your activity.</p>
+            </div>
+            <div>
+                <a href="{% url 'blog:post_create' %}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle me-2"></i> New Post
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm mb-3">
+            <div class="card-body">
+                <h1 class="display-6 text-primary">{{ user_posts|length|default:"0" }}</h1>
+                <p class="text-muted">Published Posts</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm mb-3">
+            <div class="card-body">
+                <h1 class="display-6 text-success">
+                    {% with total_likes=0 %}
+                    {% for post in user_posts %}
+                    {% with total_likes=total_likes|add:post.likes.count %}{% endwith %}
+                    {% endfor %}
+                    {{ total_likes|default:"0" }}
+                    {% endwith %}
+                </h1>
+                <p class="text-muted">Total Likes Received</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center shadow-sm mb-3">
+            <div class="card-body">
+                <h1 class="display-6 text-info">
+                    {% with total_comments=0 %}
+                    {% for post in user_posts %}
+                    {% with total_comments=total_comments|add:post.comments.count %}{% endwith %}
+                    {% endfor %}
+                    {{ total_comments|default:"0" }}
+                    {% endwith %}
+                </h1>
+                <p class="text-muted">Total Comments</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if user_posts %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h3 class="card-title mb-0">Your Recent Posts</h3>
+            </div>
+            <div class="card-body p-0">
+                <div class="list-group list-group-flush">
+                    {% for post in user_posts %}
+                    <a href="{% url 'blog:post_detail' post.pk %}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1 fw-bold">{{ post.title }}</h5>
+                                <p class="mb-1 text-muted">{{ post.content|truncatewords:20 }}</p>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill me-2">
+                                        <i class="fas fa-heart me-1"></i> {{ post.likes.count }}
+                                    </span>
+                                    <span class="badge bg-secondary rounded-pill">
+                                        <i class="fas fa-comments me-1"></i> {{ post.comments.count|default:"0" }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-muted">{{ post.created_at|date:"F d, Y" }}</small>
+                                <div class="mt-2">
+                                    <a href="{% url 'blog:post_update' post.pk %}"
+                                        class="btn btn-sm btn-outline-secondary">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="card-footer bg-light d-flex justify-content-between">
+                <a href="{% url 'blog:post_list' %}" class="btn btn-outline-primary">
+                    <i class="fas fa-globe me-2"></i>View All Posts
+                </a>
+                <a href="{% url 'blog:author_posts' user.username %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-user me-2"></i>View Your Public Profile
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="row mb-4">
+    <div class="col">
+        <div class="card shadow-sm bg-light">
+            <div class="card-body text-center p-5">
+                <div class="py-3">
+                    <i class="fas fa-feather-alt fa-4x text-muted mb-3"></i>
+                    <h3>You haven't created any posts yet</h3>
+                    <p class="lead text-muted">Share your thoughts and knowledge with the community!</p>
+                    <a href="{% url 'blog:post_create' %}" class="btn btn-primary btn-lg mt-3">
+                        <i class="fas fa-plus-circle me-2"></i>Create Your First Post
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col">
+        <div class="card shadow-sm">
+            <div class="card-header bg-light">
+                <h4 class="mb-0">Quick Actions</h4>
+            </div>
+            <div class="card-body">
+                <div class="d-flex flex-wrap gap-2">
+                    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-primary">
+                        <i class="fas fa-list me-2"></i>Browse All Posts
+                    </a>
+                    <a href="{% url 'blog:post_create' %}" class="btn btn-outline-success">
+                        <i class="fas fa-plus-circle me-2"></i>Create New Post
+                    </a>
+                    <form method="post" action="{% url 'blog:logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-outline-danger">
+                            <i class="fas fa-sign-out-alt me-2"></i>Logout
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

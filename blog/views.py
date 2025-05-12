@@ -4,10 +4,64 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from .models import Post, Like
 from django.contrib.auth.models import User
-from .forms import PostForm, CommentForm
+from .forms import PostForm, CommentForm, UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, logout
+from functools import wraps
 
-# Create your views here.
+# Custom decorator to check for authenticated non-admin users
+def non_admin_required(view_func):
+    @wraps(view_func)
+    def _wrapped_view(request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return redirect('blog:login')
+        if request.user.is_staff or request.user.is_superuser:
+            # Redirect admins/staff to a different page or show an error
+            return redirect('blog:post_list') # Redirect to blog home
+        return view_func(request, *args, **kwargs)
+    return _wrapped_view
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('blog:dashboard')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'blog/register.html', {'form': form})
+
+def login_view(request):
+    if request.method == 'POST':
+        form = UserLoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            if user is not None:
+                login(request, user)
+                return redirect('blog:dashboard')
+    else:
+        form = UserLoginForm()
+    return render(request, 'blog/login.html', {'form': form})
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('blog:post_list')
+
+
+def home_view(request):
+    # Add any context you need for the home page
+    return render(request, 'blog/home.html')
+
+@non_admin_required
+def dashboard_view(request):
+    # Get posts by the current user for the dashboard
+    user_posts = Post.objects.filter(author=request.user).order_by('-created_at')[:5]
+    context = {
+        'user_posts': user_posts
+    }
+    return render(request, 'blog/dashboard.html', context)
 
 def author_posts(request, username):
     author = get_object_or_404(User, username=username)
@@ -70,11 +124,10 @@ def post_detail(request, pk):
         ).exists()
         context['likes_count'] = post.likes.count()
     
-    # Handle comment form
-    if request.method == 'POST':
+    # Handle comment form    if request.method == 'POST':
         if not request.user.is_authenticated:
             messages.error(request, "You must be logged in to comment.")
-            return redirect('login')
+            return redirect('blog:login')
             
         comment_form = CommentForm(request.POST)
         if comment_form.is_valid():
