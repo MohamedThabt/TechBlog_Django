@@ -1,0 +1,380 @@
+/* General Body Styles */
+body {
+    font-family: 'Roboto', 'Segoe UI', 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+/* Navbar Custom Styling */
+.navbar-custom {
+    background-color: #F8F9FA; /* Very light grey background */
+    border-bottom: 1px solid #E0E7EF; /* Light grey border */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03); /* Softer, smaller shadow */
+    padding-top: 0.3rem; /* Further reduced padding */
+    padding-bottom: 0.3rem; /* Further reduced padding */
+    transition: all 0.3s ease-in-out;
+}
+
+.navbar-custom .navbar-brand {
+    font-weight: 600; /* Slightly less bold */
+    font-size: 1.3rem; /* Further reduced font size */
+    color: #33373A !important; /* Dark grey brand color */
+}
+
+.navbar-custom .navbar-brand .fa-pencil-alt {
+    color: #50C8C6; /* Soft teal for icon */
+}
+
+.navbar-custom .nav-link {
+    color: #495057 !important; /* Medium-dark grey for links */
+    font-weight: 500;
+    font-size: 0.9rem; /* Smaller font size for nav links */
+    margin-right: 12px; /* Adjusted margin */
+    padding: 4px 8px; /* Further reduced padding */
+    border-radius: 4px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: #50C8C6 !important; /* Soft teal on hover/active */
+    background-color: #E9ECEF; /* Lighter background on hover */
+}
+
+.navbar-custom .navbar-toggler {
+    border-color: #DDE2E6;
+    padding: 0.2rem 0.5rem; /* Smaller toggler */
+}
+
+.navbar-custom .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(51, 55, 58, 0.6)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Darker toggler icon lines */
+}
+
+/* Dropdown Menu */
+.navbar-custom .dropdown-menu {
+    background-color: #ffffff;
+    border: 1px solid #E0E7EF;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    border-radius: 0.25rem;
+    font-size: 0.9rem; /* Smaller font for dropdown items */
+}
+
+.navbar-custom .dropdown-item {
+    color: #33373A !important;
+    padding: 6px 15px; /* Further reduced padding */
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: #50C8C6;
+    color: #ffffff !important;
+}
+
+.navbar-custom .dropdown-item i {
+    margin-right: 8px;
+    color: #50C8C6;
+}
+
+.navbar-custom .dropdown-item:hover i {
+    color: #ffffff;
+}
+
+.navbar-custom .dropdown-divider {
+    border-top: 1px solid #E9ECEF;
+}
+
+/* Login/Register Buttons */
+.navbar-custom .login-btn,
+.navbar-custom .register-btn {
+    padding: 0.25rem 0.7rem; /* Further reduced padding */
+    font-size: 0.85rem; /* Smaller font for buttons */
+    font-weight: 500;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.navbar-custom .login-btn {
+    border: 1px solid #50C8C6;
+    color: #50C8C6;
+    background-color: transparent;
+}
+
+.navbar-custom .login-btn:hover {
+    background-color: #50C8C6;
+    color: #ffffff;
+}
+
+.navbar-custom .register-btn {
+    background-color: #50C8C6;
+    border-color: #50C8C6;
+    color: #ffffff;
+}
+
+.navbar-custom .register-btn:hover {
+    background-color: #40A09E; /* Darker teal */
+    border-color: #40A09E;
+}
+
+.navbar.scrolled {
+    background-color: rgba(248, 249, 250, 0.97) !important; /* Slightly transparent light grey */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.07);
+}
+
+/* Responsive adjustments for new navbar */
+@media (max-width: 991.98px) {
+    .navbar-custom .navbar-nav {
+        margin-top: 15px;
+    }
+
+    .navbar-custom .nav-item {
+        margin-bottom: 8px;
+    }
+
+    .navbar-custom .login-btn,
+    .navbar-custom .register-btn {
+        width: 100%;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .navbar-custom .dropdown-menu {
+        position: static;
+        float: none;
+        width: 100%;
+        margin-top: .5rem;
+        box-shadow: none;
+        border-top: 1px solid #e0e0e0; 
+    }
+}
+
+/* Ensure icons have consistent color with text */
+.nav-link i, .dropdown-item i {
+    margin-right: 8px; /* Space between icon and text */
+}
+
+/* Custom styling for login/register buttons to make them more distinct */
+.navbar-nav .btn-outline-light {
+    border-color: #f8f9fa;
+    color: #f8f9fa;
+}
+
+.navbar-nav .btn-outline-light:hover {
+    background-color: #f8f9fa;
+    color: #343a40; /* Dark text on hover for better contrast */
+}
+
+.navbar-text {
+    color: #ecf0f1 !important;
+}
+
+/* Card Styles for Posts */
+.card {
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.card-title a {
+    color: #2c3e50;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.card-title a:hover {
+    color: #3498db;
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.card-text {
+    color: #555;
+    line-height: 1.7;
+}
+
+.text-muted {
+    color: #95a5a6 !important;
+    font-size: 0.9em;
+}
+
+/* Featured post styling */
+.card.featured {
+    border-left: 4px solid #3498db;
+}
+
+/* Buttons */
+.btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 30px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.btn-primary {
+    background-color: #3498db;
+    border-color: #3498db;
+    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    border-color: #2980b9;
+}
+
+.btn-secondary {
+    background-color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+.btn-secondary:hover {
+    background-color: #6c7a7d;
+    border-color: #6c7a7d;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+    border-color: #c0392b;
+}
+
+.btn-outline-secondary {
+    color: #7f8c8d;
+    border-color: #7f8c8d;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #7f8c8d;
+    color: white;
+}
+
+/* Forms */
+form .form-control {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+form .form-control:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+/* Alerts */
+.alert {
+    margin: 15px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.alert-dismissible .close {
+    padding: 0.75rem 1.25rem;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px 0;
+    margin-top: 50px;
+    background-color: #2c3e50;
+    color: #ecf0f1;
+    position: relative;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+
+footer .container {
+    position: relative;
+}
+
+footer .text-muted {
+    color: #bdc3c7 !important;
+}
+
+/* Additional styling */
+.page-header {
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Comment section styling */
+.comments-section {
+    margin-top: 30px;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.comment-card {
+    background-color: #f8f9fa;
+    border-left: 3px solid #3498db;
+}
+
+/* Post metadata styling */
+.post-meta {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+}
+
+.post-meta .author {
+    font-weight: 500;
+}
+
+.post-meta .date {
+    color: #95a5a6;
+}
+
+.post-meta .separator {
+    margin: 0 10px;
+    color: #ddd;
+}

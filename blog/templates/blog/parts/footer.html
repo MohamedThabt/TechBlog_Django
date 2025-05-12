@@ -1,0 +1,36 @@
+{% load static %}
+<footer class="footer mt-auto py-4 bg-dark text-white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>TechBlog</h5>
+                <p class="text-muted">Share your knowledge and ideas with the world.</p>
+            </div>
+            <div class="col-md-4 mb-3 mb-md-0">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{% url 'blog:post_list' %}" class="text-muted">Home</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'blog:post_create' %}" class="text-muted">Create Post</a></li>
+                    {% else %}
+                    <li><a href="#" class="text-muted">Login</a></li>
+                    <li><a href="#" class="text-muted">Register</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5>Connect</h5>
+                <div class="social-icons">
+                    <a href="#" class="text-muted mr-3"><i class="fab fa-twitter fa-lg"></i></a>
+                    <a href="#" class="text-muted mr-3"><i class="fab fa-facebook fa-lg"></i></a>
+                    <a href="#" class="text-muted mr-3"><i class="fab fa-instagram fa-lg"></i></a>
+                    <a href="#" class="text-muted"><i class="fab fa-github fa-lg"></i></a>
+                </div>
+            </div>
+        </div>
+        <hr class="bg-secondary mt-4">
+        <div class="text-center">
+            <p class="mb-0 text-muted">TechBlog &copy; {% now "Y" %} | All rights reserved</p>
+        </div>
+    </div>
+</footer>
