@@ -2,19 +2,52 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container mt-5">
+<div class="container mt-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow-sm">
-                <div class="card-header bg-primary text-white">
+            <div class="card shadow-lg border-0" style="border-radius: 15px; overflow: hidden;">
+                <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center"
+                    style="background: linear-gradient(45deg, #007bff, #0056b3);">
                     <h2 class="mb-0">{% if form.instance.pk %}Edit Post{% else %}Create Post{% endif %}</h2>
+                    <i class="fas fa-pen-alt fa-lg"></i>
                 </div>
-                <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
+                <div class="card-body p-4">
+                    <form method="post" enctype="multipart/form-data" id="postForm">
                         {% csrf_token %}
-                        <div class="form-group">
-                            <label for="{{ form.title.id_for_label }}">Title</label>
-                            {{ form.title }}
+
+                        <!-- Image Upload Section with Preview -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.image.id_for_label }}" class="form-label fw-bold mb-2">
+                                <i class="fas fa-image me-1"></i> Featured Image
+                            </label>
+                            <div class="custom-file-container">
+                                {{ form.image }}
+                                <div id="imagePreview" class="mt-3" style="display: none;">
+                                    <p class="mb-2"><strong>Image Preview:</strong></p>
+                                    <img id="preview" src="#" alt="Preview"
+                                        style="max-width: 100%; max-height: 200px; object-fit: contain; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                                    <button type="button" id="removeImage"
+                                        class="btn btn-sm btn-outline-danger mt-2">Remove Image</button>
+                                </div>
+                            </div>
+                            {% if form.image.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.image.errors %}
+                                <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Title Field -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.title.id_for_label }}" class="form-label fw-bold mb-2">
+                                <i class="fas fa-heading me-1"></i> Post Title <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fas fa-paragraph"></i></span>
+                                {{ form.title }}
+                            </div>
                             {% if form.title.errors %}
                             <div class="invalid-feedback d-block">
                                 {% for error in form.title.errors %}
@@ -23,9 +56,16 @@
                             </div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <label for="{{ form.content.id_for_label }}">Content</label>
-                            {{ form.content }}
+
+                        <!-- Content Field -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.content.id_for_label }}" class="form-label fw-bold mb-2">
+                                <i class="fas fa-align-left me-1"></i> Content <span class="text-danger">*</span>
+                            </label>
+                            <div class="content-editor-container"
+                                style="border: 1px solid #ced4da; border-radius: 4px;">
+                                {{ form.content }}
+                            </div>
                             {% if form.content.errors %}
                             <div class="invalid-feedback d-block">
                                 {% for error in form.content.errors %}
@@ -34,13 +74,77 @@
                             </div>
                             {% endif %}
                         </div>
-                        <button type="submit" class="btn btn-success btn-block">
-                            <i class="fas fa-save mr-2"></i>{% if form.instance.pk %}Update{% else %}Create{% endif %}
-                        </button>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success py-2"
+                                style="border-radius: 8px; transition: all 0.3s ease;">
+                                <i class="fas fa-save me-2"></i>{% if form.instance.pk %}Update Post{% else %}Create
+                                Post{% endif %}
+                            </button>
+                            <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary py-2 mt-2"
+                                style="border-radius: 8px;">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Image preview functionality
+        const imageInput = document.querySelector('input[type="file"]');
+        const imagePreview = document.getElementById('imagePreview');
+        const preview = document.getElementById('preview');
+        const removeButton = document.getElementById('removeImage');
+
+        // Initial check for image
+        if (imageInput.getAttribute('value')) {
+            imagePreview.style.display = 'block';
+            preview.src = imageInput.getAttribute('value');
+        }
+
+        // When new file is selected
+        imageInput.addEventListener('change', function () {
+            if (this.files && this.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        // Remove image button
+        removeButton.addEventListener('click', function () {
+            imageInput.value = '';
+            imagePreview.style.display = 'none';
+        });
+
+        // Add styling to form elements
+        const titleInput = document.getElementById('{{ form.title.id_for_label }}');
+        const contentTextarea = document.getElementById('{{ form.content.id_for_label }}');
+
+        if (titleInput) {
+            titleInput.classList.add('form-control');
+            titleInput.style.transition = 'border-color 0.3s ease';
+        }
+
+        if (contentTextarea) {
+            contentTextarea.classList.add('form-control');
+            contentTextarea.style.minHeight = '250px';
+            contentTextarea.style.border = 'none';
+            contentTextarea.style.padding = '10px';
+            contentTextarea.style.width = '100%';
+            contentTextarea.style.transition = 'border-color 0.3s ease';
+        }
+    });
+</script>
+{% endblock extra_js %}
 {% endblock content %}

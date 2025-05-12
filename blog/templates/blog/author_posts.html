@@ -1,0 +1,109 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="page-header d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="display-4">{{ author.username }}'s Posts</h1>
+        <p class="text-muted">Showing all posts by {{ author.username }}</p>
+    </div>
+    <a href="{% url 'blog:post_list' %}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left mr-2"></i> Back to All Posts
+    </a>
+</div>
+
+<div class="row">
+    {% for post in posts %}
+    <div class="col-md-4 col-sm-6 fade-in mb-4"> <!-- Added mb-4 for gap between rows -->
+        <div class="card" style="height: 100%;"> <!-- Removed mb-4 from card as it's now on the col -->
+            {% if post.image %}
+            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}"
+                style="height: 200px; object-fit: cover;"> <!-- Uniform image size -->
+            {% else %}
+            <img src="{% static 'img/empty-post.png' %}" class="card-img-top" alt="{{ post.title }}"
+                style="height: 200px; object-fit: cover;"> <!-- Default image -->
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title text-truncate"><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a>
+                </h2> <!-- Truncated title for uniformity -->
+                <div class="post-meta mb-2">
+                    <span class="author">{{ post.author.username }}</span>
+                    <span class="separator">•</span>
+                    <span class="date">{{ post.created_at|date:"F d, Y" }}</span>
+                    <span class="separator">•</span>
+                    <span class="likes-count">
+                        <i class="fas fa-heart"></i> {{ post.likes.count }}
+                    </span>
+                    <span class="separator">•</span>
+                    <span class="comments-count">
+                        <i class="fas fa-comments"></i> {{ post.comments.count|default:"0" }}
+                    </span>
+                </div>
+                <p class="card-text text-truncate">{{ post.content|truncatewords:20|linebreaksbr }}</p>
+                <!-- Truncated content for uniformity -->
+                <div class="mt-auto d-flex justify-content-between">
+                    <a href="{% url 'blog:post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More</a>
+                    {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'blog:like_post' post.pk %}" class="d-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="next" value="list">
+                        <button type="submit"
+                            class="btn btn-sm {% if post.id in user_likes %}btn-danger{% else %}btn-outline-danger{% endif %}">
+                            <i class="{% if post.id in user_likes %}fas{% else %}far{% endif %} fa-heart"></i>
+                            {% if post.id in user_likes %}Unlike{% else %}Like{% endif %}
+                        </button>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="empty-state">
+            <img src="{% static 'img/Online page-rafiki.png' %}" alt="No posts" style="max-width: 200px; opacity: 0.5;"
+                onerror="this.style.display='none'">
+            <p class="lead mt-3">{{ author.username }} hasn't written any posts yet.</p>
+            {% if user.is_authenticated and user.username == author.username %}
+            <a href="{% url 'blog:post_create' %}" class="btn btn-primary">Create your first post</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% if is_paginated %}
+<div class="pagination-container text-center mt-5">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page=1">&laquo; First</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% endif %}
+
+        {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+        <li class="page-item active">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+        </li>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %} <li class="page-item">
+            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+            </li>
+            {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock content %}

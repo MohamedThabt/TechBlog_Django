@@ -17,12 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views  # Import auth views
-from blog.views import PostListView
+from blog import views as blog_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', PostListView.as_view(), name='home'),
+    path('', blog_views.post_list, name='home'),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
     path('login/', auth_views.LoginView.as_view(template_name='blog/login.html'), name='login'),  # Add login URL
     path('logout/', auth_views.LogoutView.as_view(template_name='blog/logout.html'), name='logout'),  # Add logout URL
 ]
+
+# Add media URL patterns
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -13,23 +13,39 @@
 
 <div class="row">
     {% for post in posts %}
-    <div class="col-md-12 fade-in">
-        <div class="card mb-4 {% if forloop.first %}featured{% endif %}">
-            <div class="card-body">
-                <h2 class="card-title"><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a></h2>
-                <div class="post-meta">
-                    <span class="author">{{ post.author.username }}</span>
+    <div class="col-md-4 col-sm-6 fade-in mb-4"> <!-- Added mb-4 for gap between rows -->
+        <div class="card" style="height: 100%;"> <!-- Removed mb-4 from card as it's now on the col -->
+            {% if post.image %}
+            <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}"
+                style="height: 200px; object-fit: cover;"> <!-- Uniform image size -->
+            {% else %}
+            <img src="{% static 'img/empty-post.png' %}" class="card-img-top" alt="{{ post.title }}"
+                style="height: 200px; object-fit: cover;"> <!-- Default image -->
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h2 class="card-title text-truncate"><a href="{% url 'blog:post_detail' post.pk %}">{{ post.title }}</a>
+                </h2> <!-- Truncated title for uniformity -->
+                <div class="post-meta mb-2">
+                    <span class="author">
+                        <a href="{% url 'blog:author_posts' post.author.username %}" class="text-decoration-none">
+                            {{ post.author.username }}
+                        </a>
+                    </span>
                     <span class="separator">•</span>
                     <span class="date">{{ post.created_at|date:"F d, Y" }}</span>
                     <span class="separator">•</span>
                     <span class="likes-count">
                         <i class="fas fa-heart"></i> {{ post.likes.count }}
                     </span>
+                    <span class="separator">•</span>
+                    <span class="comments-count">
+                        <i class="fas fa-comments"></i> {{ post.comments.count|default:"0" }}
+                    </span>
                 </div>
-                <p class="card-text">{{ post.content|truncatewords:40|linebreaksbr }}</p>
-                <div class="mt-3 d-flex">
-                    <a href="{% url 'blog:post_detail' post.pk %}" class="btn btn-sm btn-outline-primary mr-2">Read
-                        More</a>
+                <p class="card-text text-truncate">{{ post.content|truncatewords:20|linebreaksbr }}</p>
+                <!-- Truncated content for uniformity -->
+                <div class="mt-auto d-flex justify-content-between">
+                    <a href="{% url 'blog:post_detail' post.pk %}" class="btn btn-sm btn-outline-primary">Read More</a>
                     {% if user.is_authenticated %}
                     <form method="post" action="{% url 'blog:like_post' post.pk %}" class="d-inline">
                         {% csrf_token %}
@@ -48,7 +64,7 @@
     {% empty %}
     <div class="col-12 text-center py-5">
         <div class="empty-state">
-            <img src="{% static 'img/empty-posts.png' %}" alt="No posts" style="max-width: 200px; opacity: 0.5;"
+            <img src="{% static 'img/Online page-rafiki.png' %}" alt="No posts" style="max-width: 200px; opacity: 0.5;"
                 onerror="this.style.display='none'">
             <p class="lead mt-3">No posts yet.</p>
             {% if user.is_authenticated %}

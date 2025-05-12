@@ -9,10 +9,17 @@
 </div>
 
 <div class="card shadow-sm fade-in">
+    {% if object.image %}
+    <img src="{{ object.image.url }}" class="card-img-top mb-3" alt="{{ object.title }}">
+    {% endif %}
     <div class="card-body">
         <h1 class="card-title display-4">{{ object.title }}</h1>
         <div class="post-meta mb-4">
-            <span class="author">{{ object.author.username }}</span>
+            <span class="author">
+                <a href="{% url 'blog:author_posts' object.author.username %}" class="text-decoration-none">
+                    {{ object.author.username }}
+                </a>
+            </span>
             <span class="separator">•</span>
             <span class="date">{{ object.created_at|date:"F d, Y" }}</span>
             {% if object.created_at != object.updated_at %}
